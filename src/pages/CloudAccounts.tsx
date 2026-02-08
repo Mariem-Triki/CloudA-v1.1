@@ -4,6 +4,7 @@ import { Plus, MoreVertical, Cloud, Shield } from 'lucide-react';
 import { CLOUD_ACCOUNTS } from '@/lib/mock-data';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const CloudAccounts = () => {
   return (

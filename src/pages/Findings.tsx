@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from '@/lib/utils';
 
 const Findings = () => {
   const [searchTerm, setSearchTerm] = useState('');

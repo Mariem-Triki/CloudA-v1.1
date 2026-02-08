@@ -4,6 +4,7 @@ import { Upload, FileCode, AlertCircle, CheckCircle2, Loader2 } from 'lucide-rea
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { showSuccess } from '@/utils/toast';
+import { cn } from '@/lib/utils';
 
 const IaCScanner = () => {
   const [isScanning, setIsScanning] = useState(false);

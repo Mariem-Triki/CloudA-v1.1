@@ -14,6 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import { Shield, AlertTriangle, CheckCircle2, Activity } from 'lucide-react';
 import { COMPLIANCE_DATA, FINDINGS } from '@/lib/mock-data';
+import { cn } from '@/lib/utils';
 
 const Index = () => {
   const severityData = [
