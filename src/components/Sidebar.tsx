@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Cloud, 
@@ -7,12 +7,15 @@ import {
   FileCode, 
   Box, 
   Table, 
-  Settings
+  Settings,
+  LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { showSuccess } from '@/utils/toast';
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
@@ -23,6 +26,13 @@ const Sidebar = () => {
     { icon: Table, label: 'Findings Center', path: '/findings' },
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem('cloud_armor_token');
+    localStorage.removeItem('user_role');
+    showSuccess('Logged out successfully');
+    navigate('/login');
+  };
+
   return (
     <div className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
       <div className="p-6 flex flex-col items-center gap-2 border-b border-slate-800/50">
@@ -32,7 +42,6 @@ const Sidebar = () => {
             alt="ANCS Logo" 
             className="h-16 w-auto object-contain"
             onError={(e) => {
-              // Fallback if image isn't found yet
               e.currentTarget.style.display = 'none';
             }}
           />
@@ -63,11 +72,18 @@ const Sidebar = () => {
         ))}
       </nav>
       
-      <div className="p-4 border-t border-slate-800">
-        <div className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white cursor-pointer">
+      <div className="p-4 border-t border-slate-800 space-y-1">
+        <div className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white cursor-pointer transition-colors">
           <Settings size={20} />
           <span className="font-medium">Settings</span>
         </div>
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl transition-all duration-200"
+        >
+          <LogOut size={20} />
+          <span className="font-medium">Logout</span>
+        </button>
       </div>
     </div>
   );
