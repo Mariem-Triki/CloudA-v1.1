@@ -2,18 +2,22 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# Copy package files first
+# Install pnpm globally for faster package management
+RUN npm install -g pnpm
+
+# Copy package files first to leverage layer caching
 COPY package.json ./
 
-# Use npm install since package-lock.json is missing
-# --legacy-peer-deps is required for React 19 compatibility with some plugins
-RUN npm install --legacy-peer-deps --no-audit --prefer-offline
+# Use pnpm with a cache mount for the store
+# --no-frozen-lockfile allows it to work without an existing lockfile
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --no-frozen-lockfile --silent
 
 # Copy the rest of the application
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # Production stage
 FROM nginx:stable-alpine
