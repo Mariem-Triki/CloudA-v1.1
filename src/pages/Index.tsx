@@ -2,8 +2,6 @@ import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { 
   ResponsiveContainer, 
-  PieChart, 
-  Pie, 
   Cell, 
   BarChart, 
   Bar, 
@@ -12,9 +10,11 @@ import {
   Tooltip as RechartsTooltip 
 } from 'recharts';
 import { motion } from 'framer-motion';
-import { Shield, AlertTriangle, CheckCircle2, Activity } from 'lucide-react';
-import { COMPLIANCE_DATA, FINDINGS } from '@/lib/mock-data';
+import { Shield, CheckCircle2, Activity } from 'lucide-react';
+import { COMPLIANCE_DATA } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
+import RiskScoreGauge from '@/components/dashboard/RiskScoreGauge';
+import StatCard from '@/components/dashboard/StatCard';
 
 const Index = () => {
   const severityData = [
@@ -24,7 +24,11 @@ const Index = () => {
     { name: 'Low', value: 12, color: '#22c55e' },
   ];
 
-  const riskScore = 68;
+  const stats = [
+    { label: 'Active Findings', value: '28', icon: Shield, color: 'text-red-500', bg: 'bg-red-500/10' },
+    { label: 'Cloud Assets', value: '655', icon: Activity, color: 'text-cyan-500', bg: 'bg-cyan-500/10' },
+    { label: 'Compliance Rate', value: '78%', icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-500/10' },
+  ];
 
   return (
     <Layout>
@@ -34,61 +38,9 @@ const Index = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col items-center justify-center relative overflow-hidden"
-        >
-          <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500" />
-          <span className="text-slate-400 text-sm font-medium mb-2">Global Risk Score</span>
-          <div className="relative w-32 h-32 flex items-center justify-center">
-            <svg className="w-full h-full transform -rotate-90">
-              <circle
-                cx="64"
-                cy="64"
-                r="58"
-                stroke="currentColor"
-                strokeWidth="8"
-                fill="transparent"
-                className="text-slate-800"
-              />
-              <circle
-                cx="64"
-                cy="64"
-                r="58"
-                stroke="currentColor"
-                strokeWidth="8"
-                fill="transparent"
-                strokeDasharray={364.4}
-                strokeDashoffset={364.4 - (364.4 * riskScore) / 100}
-                className="text-cyan-500 transition-all duration-1000 ease-out"
-              />
-            </svg>
-            <span className="absolute text-3xl font-bold text-white">{riskScore}</span>
-          </div>
-          <span className="mt-2 text-cyan-400 text-xs font-bold uppercase tracking-wider">Moderate Risk</span>
-        </motion.div>
-
-        {[
-          { label: 'Active Findings', value: '28', icon: Shield, color: 'text-red-500', bg: 'bg-red-500/10' },
-          { label: 'Cloud Assets', value: '655', icon: Activity, color: 'text-cyan-500', bg: 'bg-cyan-500/10' },
-          { label: 'Compliance Rate', value: '78%', icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-500/10' },
-        ].map((stat, i) => (
-          <motion.div 
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between"
-          >
-            <div className={`${stat.bg} ${stat.color} w-10 h-10 rounded-lg flex items-center justify-center mb-4`}>
-              <stat.icon size={20} />
-            </div>
-            <div>
-              <span className="text-slate-400 text-sm font-medium">{stat.label}</span>
-              <h3 className="text-2xl font-bold text-white mt-1">{stat.value}</h3>
-            </div>
-          </motion.div>
+        <RiskScoreGauge score={68} />
+        {stats.map((stat, i) => (
+          <StatCard key={stat.label} {...stat} index={i} />
         ))}
       </div>
 
