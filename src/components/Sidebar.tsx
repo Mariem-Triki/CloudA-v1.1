@@ -7,8 +7,7 @@ import {
   FileCode, 
   Box, 
   Table, 
-  Settings,
-  Shield
+  Settings
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -26,14 +25,25 @@ const Sidebar = () => {
 
   return (
     <div className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
-      <div className="p-6 flex items-center gap-3">
-        <div className="bg-cyan-500 p-2 rounded-lg">
-          <Shield className="text-slate-950" size={24} />
-        </div>
-        <span className="text-xl font-bold text-white tracking-tight">Cloud Armor</span>
+      <div className="p-6 flex flex-col items-center gap-2 border-b border-slate-800/50">
+        <Link to="/" className="flex flex-col items-center gap-2">
+          <img 
+            src="/logo-white.png" 
+            alt="ANCS Logo" 
+            className="h-16 w-auto object-contain"
+            onError={(e) => {
+              // Fallback if image isn't found yet
+              e.currentTarget.style.display = 'none';
+            }}
+          />
+          <div className="text-center">
+            <span className="text-lg font-bold text-white tracking-tight block">ANCS</span>
+            <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-[0.2em]">Cloud Armor</span>
+          </div>
+        </Link>
       </div>
       
-      <nav className="flex-1 px-4 space-y-2 mt-4">
+      <nav className="flex-1 px-4 space-y-2 mt-6">
         {menuItems.map((item) => (
           <Link
             key={item.path}
