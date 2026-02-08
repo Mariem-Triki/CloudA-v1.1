@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, Loader2 } from 'lucide-react';
+import { Shield, Lock, Mail, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
-import { showSuccess } from '@/utils/toast';
+import { showSuccess, showError } from '@/utils/toast';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('admin@ancs.gov.tn');
+  const [email, setEmail] = useState('admin@cloudarmor.io');
   const [password, setPassword] = useState('password123');
   const navigate = useNavigate();
 
@@ -18,10 +18,11 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
+    // Simulated login for MVP preview
     setTimeout(() => {
       localStorage.setItem('cloud_armor_token', 'mock-jwt-token');
       localStorage.setItem('user_role', 'Admin');
-      showSuccess('Welcome back to ANCS Portal');
+      showSuccess('Welcome back, Admin!');
       navigate('/');
       setIsLoading(false);
     }, 1500);
@@ -35,15 +36,11 @@ const Login = () => {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center mb-6">
-            <img 
-              src="https://files.dyad.sh/7df6f42360fe5c978162c438e308d47b.png" 
-              alt="ANCS Logo" 
-              className="h-24 w-auto object-contain"
-            />
+          <div className="inline-flex items-center justify-center bg-cyan-500 p-3 rounded-2xl mb-4">
+            <Shield className="text-slate-950" size={32} />
           </div>
-          <h1 className="text-3xl font-bold text-white">ANCS Portal</h1>
-          <p className="text-slate-400 mt-2">Agence Nationale de la Cyber Sécurité</p>
+          <h1 className="text-3xl font-bold text-white">Cloud Armor</h1>
+          <p className="text-slate-400 mt-2">Enterprise Cloud Security Platform</p>
         </div>
 
         <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl">
@@ -57,7 +54,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 bg-slate-950 border-slate-800 text-white rounded-xl h-12 focus:ring-cyan-500"
-                  placeholder="name@ancs.gov.tn"
+                  placeholder="name@company.com"
                   required
                 />
               </div>
@@ -89,7 +86,7 @@ const Login = () => {
 
           <div className="mt-8 pt-6 border-t border-slate-800 text-center">
             <p className="text-slate-500 text-sm">
-              Authorized Personnel Only
+              Don't have an account? <span className="text-cyan-400 cursor-pointer hover:underline">Contact Sales</span>
             </p>
           </div>
         </div>

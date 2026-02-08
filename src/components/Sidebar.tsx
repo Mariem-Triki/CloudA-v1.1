@@ -7,7 +7,8 @@ import {
   FileCode, 
   Box, 
   Table, 
-  Settings
+  Settings,
+  Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,18 +26,11 @@ const Sidebar = () => {
 
   return (
     <div className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
-      <div className="p-6 flex flex-col gap-2">
-        <div className="flex items-center gap-3">
-          <img 
-            src="https://files.dyad.sh/7df6f42360fe5c978162c438e308d47b.png" 
-            alt="ANCS Logo" 
-            className="h-10 w-auto object-contain"
-          />
-          <span className="text-xl font-bold text-white tracking-tight">ANCS</span>
+      <div className="p-6 flex items-center gap-3">
+        <div className="bg-cyan-500 p-2 rounded-lg">
+          <Shield className="text-slate-950" size={24} />
         </div>
-        <span className="text-[10px] text-slate-500 font-medium leading-tight uppercase tracking-wider">
-          Cyber Security Agency
-        </span>
+        <span className="text-xl font-bold text-white tracking-tight">Cloud Armor</span>
       </div>
       
       <nav className="flex-1 px-4 space-y-2 mt-4">
