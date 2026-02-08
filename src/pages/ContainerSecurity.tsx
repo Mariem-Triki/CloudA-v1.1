@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout/Layout';
 import { Box, ShieldCheck, ShieldAlert, Search, Filter } from 'lucide-react';
 import { CONTAINER_IMAGES } from '@/lib/mock-data';
 import { Input } from '@/components/ui/input';

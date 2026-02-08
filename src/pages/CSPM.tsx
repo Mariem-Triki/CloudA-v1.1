@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
-import { ShieldAlert, RefreshCw, CheckCircle2, AlertTriangle, Search } from 'lucide-react';
+import Layout from '@/components/layout/Layout';
+import { RefreshCw, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
 import { showSuccess } from '@/utils/toast';
 import { cn } from '@/lib/utils';
 

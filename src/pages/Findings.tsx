@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout/Layout';
 import { Search, Filter, Download, ExternalLink } from 'lucide-react';
 import { FINDINGS } from '@/lib/mock-data';
 import { Input } from '@/components/ui/input';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
-import { Upload, FileCode, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import Layout from '@/components/layout/Layout';
+import { Upload, FileCode, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { showSuccess } from '@/utils/toast';

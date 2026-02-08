@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '@/components/Layout';
-import { Plus, MoreVertical, Cloud, Shield } from 'lucide-react';
+import Layout from '@/components/layout/Layout';
+import { Plus, MoreVertical, Cloud } from 'lucide-react';
 import { CLOUD_ACCOUNTS } from '@/lib/mock-data';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
