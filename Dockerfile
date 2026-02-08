@@ -2,12 +2,12 @@
 FROM node:20-alpine as build
 WORKDIR /app
 
-# Copy package files first to leverage Docker layer caching
-COPY package*.json ./
+# Copy package files first
+COPY package.json ./
 
-# Use npm ci for faster, more reliable installs in Docker
-# --legacy-peer-deps handles React 19 compatibility
-RUN npm ci --legacy-peer-deps --prefer-offline --no-audit
+# Use npm install since package-lock.json is missing
+# --legacy-peer-deps is required for React 19 compatibility with some plugins
+RUN npm install --legacy-peer-deps --no-audit --prefer-offline
 
 # Copy the rest of the application
 COPY . .
