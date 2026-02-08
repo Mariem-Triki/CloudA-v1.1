@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -8,7 +8,8 @@ import {
   Box, 
   Table, 
   Settings,
-  LogOut
+  LogOut,
+  Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { showSuccess } from '@/utils/toast';
@@ -16,6 +17,7 @@ import { showSuccess } from '@/utils/toast';
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [logoError, setLogoError] = useState(false);
   
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
@@ -37,14 +39,18 @@ const Sidebar = () => {
     <div className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
       <div className="p-6 flex flex-col items-center gap-2 border-b border-slate-800/50">
         <Link to="/" className="flex flex-col items-center gap-2">
-          <img 
-            src="/logo-white.png" 
-            alt="ANCS Logo" 
-            className="h-16 w-auto object-contain"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-            }}
-          />
+          {!logoError ? (
+            <img 
+              src="/logo-white.png" 
+              alt="ANCS Logo" 
+              className="h-16 w-auto object-contain"
+              onError={() => setLogoError(true)}
+            />
+          ) : (
+            <div className="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center border border-cyan-500/20">
+              <Shield className="text-cyan-400" size={32} />
+            </div>
+          )}
           <div className="text-center">
             <span className="text-lg font-bold text-white tracking-tight block">ANCS</span>
             <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-[0.2em]">Cloud Armor</span>

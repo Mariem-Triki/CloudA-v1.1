@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, Loader2 } from 'lucide-react';
+import { Lock, Mail, Loader2, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
@@ -10,6 +10,7 @@ import { showSuccess } from '@/utils/toast';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const [email, setEmail] = useState('admin@ancs.gov.tn');
   const [password, setPassword] = useState('password123');
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulated login for MVP preview
     setTimeout(() => {
       localStorage.setItem('cloud_armor_token', 'mock-jwt-token');
       localStorage.setItem('user_role', 'Admin');
@@ -37,11 +37,18 @@ const Login = () => {
       >
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
-            <img 
-              src="/logo-white.png" 
-              alt="ANCS Logo" 
-              className="h-24 w-auto object-contain"
-            />
+            {!logoError ? (
+              <img 
+                src="/logo-white.png" 
+                alt="ANCS Logo" 
+                className="h-24 w-auto object-contain"
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <div className="w-20 h-20 bg-cyan-500/10 rounded-3xl flex items-center justify-center border border-cyan-500/20">
+                <Shield className="text-cyan-400" size={40} />
+              </div>
+            )}
           </div>
           <h1 className="text-3xl font-bold text-white">Cloud Armor</h1>
           <p className="text-slate-400 mt-2 uppercase tracking-widest text-xs font-bold">Agence Nationale de la Cyber Sécurité</p>
