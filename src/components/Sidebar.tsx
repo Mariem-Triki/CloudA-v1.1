@@ -7,7 +7,8 @@ import {
   FileCode, 
   Box, 
   Table, 
-  Settings
+  Settings,
+  Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,23 +26,14 @@ const Sidebar = () => {
 
   return (
     <div className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
-      <div className="p-6 flex flex-col items-center gap-3 border-b border-slate-800/50">
-        <img 
-          src="/logo--ancs.png" 
-          alt="ANCS Logo" 
-          className="h-16 w-auto object-contain"
-          onError={(e) => {
-            // Fallback if image isn't in public folder yet
-            e.currentTarget.style.display = 'none';
-          }}
-        />
-        <div className="text-center">
-          <span className="text-lg font-bold text-white tracking-tight block">ANCS</span>
-          <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Cyber Security</span>
+      <div className="p-6 flex items-center gap-3">
+        <div className="bg-cyan-500 p-2 rounded-lg">
+          <Shield className="text-slate-950" size={24} />
         </div>
+        <span className="text-xl font-bold text-white tracking-tight">Cloud Armor</span>
       </div>
       
-      <nav className="flex-1 px-4 space-y-2 mt-6">
+      <nav className="flex-1 px-4 space-y-2 mt-4">
         {menuItems.map((item) => (
           <Link
             key={item.path}
