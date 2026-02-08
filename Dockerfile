@@ -2,11 +2,12 @@
 FROM node:20-alpine as build
 WORKDIR /app
 
-# Copy package files
+# Copy package files first to leverage Docker layer caching
 COPY package*.json ./
 
-# Install dependencies with legacy-peer-deps to handle React 19 conflicts
-RUN npm install --legacy-peer-deps
+# Use npm ci for faster, more reliable installs in Docker
+# --legacy-peer-deps handles React 19 compatibility
+RUN npm ci --legacy-peer-deps --prefer-offline --no-audit
 
 # Copy the rest of the application
 COPY . .
@@ -18,7 +19,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Add custom nginx config if needed, otherwise default works for SPA
+# SPA routing support for Nginx
 RUN printf 'server {\n  listen 80;\n  location / {\n    root /usr/share/nginx/html;\n    index index.html index.htm;\n    try_files $uri $uri/ /index.html;\n  }\n}\n' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
