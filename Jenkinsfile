@@ -52,25 +52,34 @@ pipeline {
         }
 
         // ── 5. TRIVY SCAN (NOUVEAU) ───────────────────
-        stage('Trivy Scan') {
-            steps {
-                sh '''
-                    trivy image \
-                    --exit-code 0 \
-                    --severity LOW,MEDIUM,HIGH,CRITICAL \
-                    --format table \
-                    --output trivy-report.txt \
-                    ${IMAGE_NAME}:${IMAGE_TAG}
-                '''
-                sh 'cat trivy-report.txt'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'trivy-report.txt',
-                                     allowEmptyArchive: true
-                }
-            }
+      stage('Trivy Scan') {
+    steps {
+        sh '''
+            trivy image \
+            --exit-code 0 \
+            --severity LOW,MEDIUM,HIGH,CRITICAL \
+            --format table \
+            --output trivy-report.txt \
+            cloudarmor-pipeline-frontend:latest
+        '''
+        sh '''
+            trivy image \
+            --exit-code 0 \
+            --severity LOW,MEDIUM,HIGH,CRITICAL \
+            --format table \
+            --output trivy-report-backend.txt \
+            cloudarmor-pipeline-backend:latest
+        '''
+        sh 'cat trivy-report.txt'
+        sh 'cat trivy-report-backend.txt'
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'trivy-report*.txt',
+                             allowEmptyArchive: true
         }
+    }
+}
 
         // ── 6. DEPLOY ─────────────────────────────────
         stage('Deploy') {
